@@ -24,7 +24,7 @@ SECRET_KEY = 'ayhvsp2ahm7gi++r3!a&ed80ag44im+cd9l4e_lgn(j-+&o+3v'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -78,7 +78,7 @@ DATABASES = {
         'PORT': '3307',
         'USER': 'root',
         'PASSWORD': 'password',
-        # 'CHARSET': 'utf8'
+        'CHARSET': 'utf8'
     }
 }
 
@@ -117,3 +117,22 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://175.178.152.43:6379/0',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    },
+    'session': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://175.178.152.43:6379/1',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    },
+}
+SESSION_ENGINE = 'django.contrib.session.backends.cache'
+SESSION_CACHE_ALIAS = 'session'
